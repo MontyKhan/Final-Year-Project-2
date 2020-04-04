@@ -6,7 +6,7 @@ def str_join(*args):
     return ''.join(map(str, args))
 
 dataset = os.fsencode('D:\CT study Georgia Breen')
-output = 'D:\Central slices'
+output = 'D:\Coursework\Final-Year-Project-2\Central slices'
 
 for patient in os.listdir(dataset):
 	filename = os.fsdecode(patient)
