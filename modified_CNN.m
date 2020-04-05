@@ -281,6 +281,8 @@ tempLayers = [
     depthConcatenationLayer(4,"Name","inception_5b-output")
     globalAveragePooling2dLayer("Name","pool5-7x7_s1")
     dropoutLayer(0.4,"Name","pool5-drop_7x7_s1")
+    % Set learn rate factors higher to "push" relearning and bottle neck
+    % feature extraction, and change number of classes to 2.
     fullyConnectedLayer(2,"Name","fc","BiasLearnRateFactor",10,"WeightLearnRateFactor",10)
     softmaxLayer("Name","prob")
     classificationLayer("Name","classoutput")];
