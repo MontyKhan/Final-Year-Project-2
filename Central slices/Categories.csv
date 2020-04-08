@@ -1,8 +1,24 @@
-Chester Mosley,CKCS ,Control
-Ellie Ansty,CKCS ,Diseased
-Evie Morris,CKCS,Control
-Frank Lewin,CKCS ,Diseased
-Pebbles Gottler,CKCS,Control
-Shilo Joyce,CKCS,Diseased
-Sushi Morris,CKCS,Control
-Toby Groves,CKCS,Diseased
+Name,Breed,sex,neutered ,CM-N,CM-P ,SM-M ,SM-S,other diagnosis ,affected CMSM ,MRI ,MPRAGE,
+Barney Kiely ,CKCS,m,0,0,1,1,0,,1,1,,
+Benji Warden ,CKCS,m,0,0,1,0,0,,1,1,,
+Charlie Scully ,CKCS ,m,1,0,1,1,0,,1,1,,
+Chester Crosbie ,CKCS ,m,1,1,0,0,0,LSD ,0,1,,
+Chester Mosley ,CKCS ,m,1,1,0,0,0,behavioural - aggression -owner thinks may be in pain,0,1,1,
+Daisy Cook ,CKCS,f,1,0,1,1,0,,1,1,,
+Dillon Knight ,CKCS,m,1,,,,,tooth root abscess with secondary encephalits ,0,1,,MRI needs to be assessed CR
+Dove Baumberger ,CKCS ,f,1,0,0,0,1,,1,1,,
+Ellie Ansty ,CKCS ,f,0,0,1,1,0,,1,1,,
+Eric Brennan ,CKCS,m,1,0,0,0,1,,1,1,1,
+Isabella Simmons,CKCS,f,0,0,1,0,1,,1,1,,
+Lola Karuppiah,CKCS,f,1,0,1,1,0,,1,1,,
+Matt Cruciani ,CKCS,m,?,0,0,0,1,,1,1,,
+Millie Grace ,CKCS,f,1,0,0,0,1,,1,1,,
+Molly Ledger ,CKCS,f,1,0,1,0,1,skull tumour ,1,1,,
+Pippa Hunter ,CKCS,f,1,0,1,1,0,,1,1,,
+Shilo Joyce ,CKCS ,f,1,0,1,0,0,IVDD,1,1,,
+Spot Pearson ,CKCS,m,0,1,0,0,0,ivdd,0,1,,
+Stella Hutchinson ,CKCS,f,0,0,1,1,0,,1,1,,
+Tank Carter ,CKCS,m,?,1,0,0,0,,0,1,,
+Tilly Smith ,CKCS,f,1,0,0,0,1,,1,1,,
+Topsy Bembridge ,CKCS ,f,0,0,1,1,0,,1,1,,
+Woody Carter ,CKCS ,m,?,1,0,0,0,,0,1,,
