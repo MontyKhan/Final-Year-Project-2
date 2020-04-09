@@ -5,7 +5,7 @@ import pydicom
 def str_join(*args):
     return ''.join(map(str, args))
 
-def sort_data():
+def identify_data():
 	# Set filepaths
 	dataset = os.fsencode('D:\CT study Georgia Breen')
 	output_path = 'D:\Coursework\Final-Year-Project-2\Central slices\DICOM'
@@ -100,4 +100,4 @@ def find_central_slice(filename):
 
 	return central_slice
 
-sort_data()
+identify_data()
