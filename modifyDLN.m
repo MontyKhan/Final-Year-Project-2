@@ -1,9 +1,15 @@
-function [lgraph] = modifyDLN(net,numClasses)
+function [lgraph, inputSize] = modifyDLN(net,numClasses)
 % modifyDLN - Takes a pre-existing known DLN and through bottleneck feature
 %             extraction adapts it to suit new dataset.
 % Arguments:  net (pretrained DLN, as a MATLAB variable)
-%             numbclasses (the number of classes into which to sort the data)
-% Returns:    lgraph, a LayerGraph containing the modified network
+%             numbclasses (the number of classes into which to sort the
+%             data.
+% Returns:    lgraph, a LayerGraph containing the modified network.
+%             inputSize, a 3x1 vector describing the expected dimensions of
+%             the input image.
+
+% Identify expected charateristics of input images.
+inputSize = net.Layers(1).InputSize;
 
 % Create MATLAB compatible layer graph
 if isa(net,'SeriesNetwork') 
