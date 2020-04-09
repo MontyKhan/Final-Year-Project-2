@@ -25,7 +25,6 @@ def identify_data():
 
 	# Then iterate through medical imaging directory
 	for patient in os.listdir(dataset):
-		count = count + 1
 		filename = os.fsdecode(patient)
 
 		# Search through key for patient info
