@@ -18,7 +18,7 @@ imds = imageDatastore(dataset, ...
 size = length(imds.Files);
 
 % Initialise vector
-accuracy_series = [];
+accuracy_array = [];
 
 % Try using different image from dataset to test each time, then average
 % probabilities
@@ -54,11 +54,12 @@ for n = 1:(size)
     % Test network and obtain accuracy readings.
     [YPred,probs] = classify(net,augimdsTest);
     iter_accuracy = mean(YPred == imdsTest.Labels);
-    accuracy_series = [accuracy_series, iter_accuracy];
+    classification.actual = imdsTest.Labels;
+    classification.calculated = YPred;
+    accuracy_array = [accuracy_array; [imdsTest.Labels, YPred]];
 end
 
 % Calculate overall accuracy.
-accuracy = mean(accuracy_series)
-
-end
+% accuracy = mean(accuracy_array)
+accuracy = mean(accuracy_array(:,1) == accuracy_array(:,2));
 
