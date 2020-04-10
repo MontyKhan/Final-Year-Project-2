@@ -12,7 +12,8 @@ The majority of the code will be developed in MATLAB, with some Python scripts b
 
 ### MATLAB
 
-* __Deep Learning Toolbox__ - For all CNN and DNN functionality
+* __Deep Learning Toolbox__ - For all CNN and DLN functionality
 * __Image Processing Toolbox__ - For pre-processing the central slices of the MRI scans
 * __Computer Vision Toolbox__ - For analysing the central slices of the MRI scans for biomarkers.
-* __Deep Learning Toolbox Model for GoogLeNet Network__ - For the specific DNN used within this project.
+* __Deep Learning Toolbox Model for VGG19 Network__ - For the specific DLN used within this project.
+* __Parallel Computing Toolbox__ - For faster processing of images by DLN.
