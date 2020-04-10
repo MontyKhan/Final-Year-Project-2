@@ -10,48 +10,48 @@ imageVector = [];
 mask_3d = [];
 
 % Set paths
-input = 'D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)';
-output = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks';
+input1 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\affected');
+input2 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\control');
+output = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks\';
+pt_folder = strcat(output, 'pt_clouds\');
 
-dataset = dir(input)
+% Create list of relevant files.
+dataset = [input1(3:end) ; input2(3:end)];
 
-for n = 3:length(dataset)
+for n = 1:length(dataset)
     %% Generate masks
     filename = dataset(n).name;
-    image = imread(fullfile(input,filename));
+    directory = dataset(n).folder;
+    image = imread(fullfile(directory,filename));
     image = rgb2gray(image);
-    [count,x] = imhist(image);
+    filename = erase(filename, '.png');
     
-    plot(x, count);
+    mask = (image > 45);                                       % Threshold out values below 300 (i.e. soft tissue)
     
-    mask = (image > 70);                                       % Threshold out values below 300 (i.e. soft tissue)
-    imshow(mask);
-    seOpen = strel('disk',2);                                   % Set dilate
-    seClose = strel('disk',2);                                  % Set erode
-    cleanMask = imopen(mask, seOpen);                           % Dilate
-    cleanMask = imclose(cleanMask,seClose);                     % Erode
+    for i = 1:10
+        seOpen = strel('disk',1);                                   % Set dilate
+        seClose = strel('disk',1);                                  % Set erode
+        cleanMask = imopen(mask, seOpen);                           % Dilate
+        cleanMask = imclose(cleanMask,seClose);                     % Erode
+    end
+    
+    % imshow(cleanMask)
     
     %% IF LOOKING TO COMPARE IMAGES
     % imageDisplay = mat2gray(image);                           % Convert original image to grayscale
     % outdisplay = montage({imageDisplay mask cleanMask}  ...   % Create new image of original image, mask and cleaned mask in a row
     %                      , 'Size', [1 3] ...              
-    %                      ,'DisplayRange',[]);
-    % cd 'D:\Final Year Project\threshholds2';                  % Change working directory             
-    % filename = strcat('th_',num2str(n),'.png');               % Save
+    %                      ,'DisplayRange',[]);          
+    % filename = strcat(output,'com_',filename,'.png');               % Save
     % saveas(outdisplay,filename);
 
     %% IF LOOKING TO SAVE MASKS
-    cd 'D:\Coursework\Final Year Project\threshholds4';
-    filename = strcat('th_',num2str(n),'.png');
-    imwrite(cleanMask,filename);
+    filename_mask = strcat(output,'th_',filename,'.png');
+    imwrite(cleanMask,filename_mask);
       
-    %% Convert to list of coordinates
+    %% Convert to list of coordinates and create point cloud
     [row, col] = find(cleanMask);
-    mask_3d = [mask_3d ; [row, col, repmat(n*1.3,length(row),1)]];
+    pt_cloud = pointCloud([row, col, repmat(1,length(row),1)]);
+    filename_pc = strcat(pt_folder, filename);
+    pcwrite(pt_cloud,filename_pc,'PLYFormat','binary');
 end
-
-% Create point cloud
-ptCloud = pointCloud(mask_3d);
-
-% Show point cloud
-pcshow(ptCloud)
