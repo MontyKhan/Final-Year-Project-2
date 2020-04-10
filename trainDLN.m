@@ -22,7 +22,7 @@ accuracy_series = [];
 
 % Try using different image from dataset to test each time, then average
 % probabilities
-for n = 2:(size-1)
+for n = 1:(size)
     % Partition test set and training set, using leaving one out cross
     % validation
     imdsTest = imageDatastore(imds.Files(n), ...
