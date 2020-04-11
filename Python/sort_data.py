@@ -4,7 +4,7 @@ import shutil
 def sort_data():
 
 	# Set path for directory containing files to be sorted
-	image_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)'
+	image_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Images (transformed)\Manual'
 	
 	# Set output directories
 	affected_folder = os.path.join(image_folder, 'affected')
