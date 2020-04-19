@@ -10,9 +10,9 @@ imageVector = [];
 mask_3d = [];
 
 % Set paths
-input1 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\affected');
-input2 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\control');
-output = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks\';
+input1 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\affected');
+input2 = dir('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\control');
+output = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\';
 pt_folder = strcat(output, 'pt_clouds\');
 
 % Create list of relevant files.

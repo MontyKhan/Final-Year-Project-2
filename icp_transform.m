@@ -1,8 +1,8 @@
 function [output] = icp_transform(input)
 
-    input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Masks\pt_clouds\');
-    base_mask = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks\base.png';
-    output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Images (transformed)\';
+    input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\pt_clouds\');
+    base_mask = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\base.png';
+    output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Skulls (transformed)\';
 
     point_clouds = input(3:end);
     for n = 1:length(point_clouds)
@@ -15,7 +15,7 @@ function [output] = icp_transform(input)
     image = imread(base_mask);
     [row, col] = find(image);
     base_cloud = pointCloud([row, col, repmat(1,length(row),1)]);
-    filename_pc = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Masks\pt_clouds\', 'base');
+    filename_pc = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\pt_clouds\', 'base');
     pcwrite(base_cloud,filename_pc,'PLYFormat','binary');
 
     output = [];
@@ -34,16 +34,27 @@ function [output] = icp_transform(input)
         tform_2D(2,3) = 0;
 
         info.name = point_clouds(i).name;
-        info.tform = tform_2D;
+        info.class = '';
+        info.tform2D = tform_2D;
+        info.tform3D = tform.T;
         info.rmse = rmse;
+        
+        % Classify data based on filename.
+        if (contains(info.name, 'affected'))
+            info.class = 'affected';
+        elseif (contains(info.name, 'control'))
+            info.class = 'control';
+        else
+            info.class = 'error';
+        end
         
         tform_2D(tform_2D < 0.0001) = 0;
         image_transform = affine2d(tform_2D);
         filename = erase(point_clouds(i).name, '.ply');
         
-        subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\affected\', filename, '.png');
+        subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\affected\', filename, '.png');
         if ~(isfile(subject))
-            subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Images (cropped)\control\', filename, '.png');
+            subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\control\', filename, '.png');
         end
         
         output_name = strcat(output_folder, filename, '.png');
