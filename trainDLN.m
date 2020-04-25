@@ -46,10 +46,14 @@ for n = 1:(size)
         'InitialLearnRate',3e-4, ...
         'Shuffle','every-epoch', ...
         'Verbose',false, ...
-        'Plots','none');
+        'Plots','training-progress', ...
+        'OutputFcn',@(info)saveIfDone(info, n));
+        % 'Plots','none');
 
     % Train network
     net = trainNetwork(augimdsTrain,DLN,options);
+    
+    close all hidden;
     
     % Test network and obtain accuracy readings.
     [YPred,probs] = classify(net,augimdsTest);
