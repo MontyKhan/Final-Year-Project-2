@@ -65,7 +65,7 @@ for n = 1:(size)
     
     % Test network and obtain accuracy readings.
     [YPred,probs] = classify(net,augimdsTest);
-    certainty = [certainty ; max(probs)];
+    certainty = [certainty ; probs];
     predict_labels = [predict_labels ; YPred];
     iter_accuracy = mean(YPred == imdsTest.Labels);
     classification.actual = imdsTest.Labels;
@@ -79,6 +79,6 @@ end
 accuracy = mean(accuracy_array(:,1) == accuracy_array(:,2));
 
 % Create table of results
-table(true_labels(:),predict_labels(:),certainty(:),'VariableNames',...
-    {'TrueLabel','PredictedLabel','Score'})
+table(true_labels(:),predict_labels(:),certainty(:, 1),certainty(:,2),'VariableNames',...
+    {'TrueLabel','PredictedLabel','Affected Score','Control score'})
 

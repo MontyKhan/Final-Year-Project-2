@@ -18,6 +18,8 @@ pt_folder = strcat(output, 'pt_clouds\');
 % Create list of relevant files.
 dataset = [input1(3:end) ; input2(3:end)];
 
+imageVector = [];
+
 for n = 1:length(dataset)
     %% Generate masks
     filename = dataset(n).name;
@@ -25,6 +27,8 @@ for n = 1:length(dataset)
     image = imread(fullfile(directory,filename));
     image = rgb2gray(image);
     filename = erase(filename, '.png');
+    
+    imageVector = [imageVector ; double(image(:))];
     
     mask = (image > 45);                                       % Threshold out values below 300 (i.e. soft tissue)
     
@@ -55,3 +59,16 @@ for n = 1:length(dataset)
     filename_pc = strcat(pt_folder, filename);
     pcwrite(pt_cloud,filename_pc,'PLYFormat','binary');
 end
+
+minValue = min(min(imageVector));
+maxValue = max(max(imageVector));
+
+% figure
+% imhist(image,4729);
+figure
+histogram(imageVector,maxValue-minValue);
+% bar(intensity_hist);
+xlim([0 maxValue])
+set(gca, 'YScale', 'log')
+ylabel('Log of frequency');
+xlabel('Intensity');
