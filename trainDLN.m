@@ -19,6 +19,9 @@ size = length(imds.Files);
 
 % Initialise vector
 accuracy_array = [];
+true_labels = [];
+predict_labels = [];
+certainty = [];
 
 % Try using different image from dataset to test each time, then average
 % probabilities
@@ -62,8 +65,11 @@ for n = 1:(size)
     
     % Test network and obtain accuracy readings.
     [YPred,probs] = classify(net,augimdsTest);
+    certainty = [certainty ; max(probs)];
+    predict_labels = [predict_labels ; YPred];
     iter_accuracy = mean(YPred == imdsTest.Labels);
     classification.actual = imdsTest.Labels;
+    true_labels = [true_labels ; imdsTest.Labels];
     classification.calculated = YPred;
     accuracy_array = [accuracy_array; [imdsTest.Labels, YPred]];
 end
@@ -71,4 +77,8 @@ end
 % Calculate overall accuracy.
 % accuracy = mean(accuracy_array)
 accuracy = mean(accuracy_array(:,1) == accuracy_array(:,2));
+
+% Create table of results
+table(true_labels(:),predict_labels(:),certainty(:),'VariableNames',...
+    {'TrueLabel','PredictedLabel','Score'})
 
