@@ -57,7 +57,7 @@ for n = 1:(size)
         'Verbose',false, ...
         'Plots','training-progress', ...
         'OutputFcn',@(info)saveIfDone(info, n));
-
+    
     % Train network
     net = trainNetwork(augimdsTrain,DLN,options);
     
@@ -72,6 +72,58 @@ for n = 1:(size)
     true_labels = [true_labels ; imdsTest.Labels];
     classification.calculated = YPred;
     accuracy_array = [accuracy_array; [imdsTest.Labels, YPred]];
+    
+    % Obtain CAM
+    classes = net.Layers(end).Classes;
+    layerName = 'relu5_4';
+    
+    im = imread(string(augimdsTest.Files(1)));
+    imResized = imresize(im,[inputSize(1),NaN]);
+    imageActivations = activations(net,imResized,layerName);
+    
+    h = figure('Units','normalized','Position',[0.05 0.05 0.9 0.8],'Visible','on');
+    
+    imResized = imresize(im,[inputSize(1), NaN]);
+    imageActivations = activations(net,imResized,layerName);
+    
+    scores = squeeze(mean(imageActivations,[1 2]));
+    
+    [~,classIds] = maxk(scores,3);
+    CAM = imageActivations(:,:,classIds(1));
+    
+    im = imresize(im,[224,224]);
+    subplot(1,2,1)
+    imshow(im)
+    
+    subplot(1,2,2)
+    % CAMshow(im,classActivationMap)
+    
+    CAM = imresize(CAM,inputSize(1:2));
+    
+    minimum = min(CAM(:));
+    maximum = max(CAM(:));
+    CAM = (CAM-minimum)/(maximum-minimum);
+    
+    CAM(CAM<0.2) = 0;
+    cmap = jet(255).*linspace(0,1,255)';
+    CAM = ind2rgb(uint8(CAM*255),cmap)*255;
+    
+    combinedImage = double(rgb2gray(im))/2 + CAM;
+    % combinedImage = normalizeImage(combinedImage)*255;
+    
+    minimum = min(combinedImage(:));
+    maximum = max(combinedImage(:));
+    combinedImage = (combinedImage-minimum)/(maximum-minimum);
+    combinedImage = combinedImage*255;
+    
+    imshow(uint8(combinedImage));
+    
+    [filepath,patientName,ext] = fileparts(string(augimdsTest.Files(1)));
+    title(patientName);
+    
+    drawnow
+    
+    saveas(h, strcat('D:\Coursework\Final-Year-Project-2\Data\CAMs\', patientName, '.png'));
 end
 
 % Calculate overall accuracy.
