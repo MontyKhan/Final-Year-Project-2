@@ -1,5 +1,5 @@
-input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\pt_clouds\');
-output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Skulls (transformed)\';
+input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\Point clouds\');
+output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\Warped\';
 
 files = input(3:end);
 dataset = [];
