@@ -1,8 +1,8 @@
 function [output] = icp_transform(input)
 
-    input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\pt_clouds\');
-    base_mask = 'D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\base.png';
-    output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Skulls (transformed)\';
+    input = dir('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\Point clouds');
+    base_mask = 'D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\base.png';
+    output_folder = 'D:\Coursework\Final-Year-Project-2\Central slices\Skull edges (transformed)\';
 
     point_clouds = input(3:end);
     for n = 1:length(point_clouds)
@@ -15,7 +15,7 @@ function [output] = icp_transform(input)
     image = imread(base_mask);
     [row, col] = find(image);
     base_cloud = pointCloud([row, col, repmat(1,length(row),1)]);
-    filename_pc = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Masks (skulls)\pt_clouds\', 'base');
+    filename_pc = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\Point clouds', 'base');
     pcwrite(base_cloud,filename_pc,'PLYFormat','binary');
 
     output = [];
@@ -52,9 +52,9 @@ function [output] = icp_transform(input)
         image_transform = affine2d(tform_2D);
         filename = erase(point_clouds(i).name, '.ply');
         
-        subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\affected\', filename, '.png');
+        subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\', filename, '.png');
         if ~(isfile(subject))
-            subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (cropped)\control\', filename, '.png');
+            subject = strcat('D:\Coursework\Final-Year-Project-2\Central slices\Skulls (edges)\', filename, '.png');
         end
         
         output_name = strcat(output_folder, filename, '.png');
